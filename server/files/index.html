@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movies!</title>
     <style>
-        /* Part 3: Your styling goes here */
+        /* Part 3: Your styling goes here 
+        - css zeug hier rein
+        */
     </style>
     <script>
         function reverseString(s) {
@@ -18,7 +20,12 @@
             xhr.onload = function () {
                 const bodyElement = document.querySelector("body")
                 if (xhr.status == 200) {
-		            /* Part 2: Build the HTML elements here and append them to the body */ 
+		            /* Part 2: Build the HTML elements here and append them to the body 
+                    - In server/files/index.html, parse the JSON returned by the server, 
+                    - loop over the movie array, and 
+                    - dynamically create semantic HTML elements that display all required movie information. 
+                    - Append the created elements to the page body.
+                    */ 
                     bodyElement.append(reverseString(xhr.responseText))
                 } else {
                     bodyElement.append("Daten konnten nicht geladen werden, Status " + xhr.status + " - " + xhr.statusText)
