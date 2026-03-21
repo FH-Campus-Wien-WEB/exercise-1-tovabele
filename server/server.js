@@ -11,6 +11,7 @@ app.get('/movies', function (req, res) {
   Implement the server-side endpoint in server/server.js so that 
   /movies returns an array of at least three movie objects in valid JSON, 
   based on OMDb API example data (trimmed and reformatted as specified).
+  fetch('https://api.example.com/data').then(response => response.json()).then(data => { console.log(data); })
   */
   res.send('!dlrow olleH')
 })
