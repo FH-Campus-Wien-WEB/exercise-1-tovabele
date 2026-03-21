@@ -33,36 +33,96 @@
             return s.split("").reverse().join("");
         }
 
+        function generateUnorderedList(body, heading, items) {
+            const listHeading = document.createElement('h2')
+            listHeading.textContent = heading
+            body.append(listHeading)
+
+            let unorderedList = document.createElement('ul')
+            body.append(unorderedList)
+                        
+            items.forEach(item => {
+                let li = document.createElement('li')
+                li.textContent = item
+                unorderedList.appendChild(li)
+            })
+        }
+
         function interpretJSON(j) {
             const data = JSON.parse(j);
-            let output = "Hallo";
-            
+            const body = document.body;
+           
             //looping through the json movie objects
             data.forEach(item => {
                 // loop through the key words
                 for (let key in item) {
                     switch (key) {
-                        case 'Title' :
-                            item[key] = '<h1>'+item[key]+'</h1>';
-                            console.log("ich bin im " + key);
-                            console.log(item[key]);
-                            output += item[key];
-                            break;
-                        case 'Actors' :
-                            item[key] = '<h2>' + item[key] + '</h2>';
+                        case 'Title':
+                            const header = document.createElement('h1')
+                            header.innerText = item[key]
+                            body.append(header)
                             console.log("ich bin im " + key);
                             console.log(item[key]);
                             break;
-
+                        case 'Runtime':
+                            const runtime = document.createElement('div')
+                            const time = item[key]
+                            const hours = Math.floor(time / 60)
+                            const mins = time % 60
+                            runtime.textContent = 'Runtime: ' + hours + 'h ' + mins + 'm'
+                            body.append(runtime)
+                            break;
+                        case 'Released':
+                            const released = document.createElement('div')
+                            const date = item[key]
+                            released.textContent = 'Released on ' + date
+                            body.append(released)
+                            break;
+                        case 'Genres':
+                            const genre = document.createElement('div')
+                            genre.textContent = item[key]
+                            body.append(genre)
+                            break;
+                        case 'Directors':
+                            generateUnorderedList(body, "Director:", item[key])
+                            break;
+                        case 'Writers':
+                            generateUnorderedList(body, "Writer:", item[key])
+                            break;
+                        case 'Actors':
+                            generateUnorderedList(body, "Actor:", item[key])
+                            break;
+                        case 'Plot':
+                            const plot = document.createElement('div')
+                            plot.textContent = item[key]
+                            body.append(plot)
+                            break;
+                        case 'Metascore':
+                            const metascore = document.createElement('div')
+                            metascore.textContent = '' + metascore
+                            body.append(metascore)
+                            break;
+                        case 'Poster':
+                            const poster = document.createElement('div')
+                            poster.textContent = '' + poster
+                            body.append(poster)
+                            break;
+                        case 'imdbRating':
+                            const imdbrating = document.createElement('div')
+                            imdbrating.textContent = '' + imdbrating
+                            body.append(imdbrating)
+                            break;
+                        default:
+                            const paragraph = document.createElement('p')
+                            paragraph.innerText = item[key]
+                            body.append(paragraph)
                     }
+                        
+                    
                 }
 
-                //oder solche loops?
-                //for (var i = 0; i < j[key].length; i++) {                }
             })
-            console.log(data)
-            //bla = data[0].Title
-            return output
+            return body
         }
 
         window.onload = function () {
