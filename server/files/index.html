@@ -6,13 +6,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movies!</title>
     <style>
-        /* Part 3: Your styling goes here 
-        - css zeug hier rein
+        /* Part 3: Your styling goes here - css zeug hier rein
+        this doesnt work, ask why!  <link rel="stylesheet" href="./stylesheets/style.css" >
         */
+        body {
+            margin: 25px;
+            background-color: rgb(240,240,240);
+            font-family: arial, sans-serif;
+            font-size: 14px;
+        }
+        /* Applies to all <h1>...</h1> elements. */
+        h1 {
+            font-size: 35px;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+        /* Applies to all elements with <... class="someclass"> specified. 
+        .someclass {
+            color: red;
+        }
+        */
+
     </style>
     <script>
         function reverseString(s) {
             return s.split("").reverse().join("");
+        }
+
+        function interpretJSON(j) {
+            const data = JSON.parse(j);
+            let output = "Hallo";
+            
+            //looping through the json movie objects
+            data.forEach(item => {
+                // loop through the key words
+                for (let key in item) {
+                    switch (key) {
+                        case 'Title' :
+                            item[key] = '<h1>'+item[key]+'</h1>';
+                            console.log("ich bin im " + key);
+                            console.log(item[key]);
+                            output += item[key];
+                            break;
+                        case 'Actors' :
+                            item[key] = '<h2>' + item[key] + '</h2>';
+                            console.log("ich bin im " + key);
+                            console.log(item[key]);
+                            break;
+
+                    }
+                }
+
+                //oder solche loops?
+                //for (var i = 0; i < j[key].length; i++) {                }
+            })
+            console.log(data)
+            //bla = data[0].Title
+            return output
         }
 
         window.onload = function () {
@@ -25,8 +75,9 @@
                     - loop over the movie array, and 
                     - dynamically create semantic HTML elements that display all required movie information. 
                     - Append the created elements to the page body.
-                    */ 
                     bodyElement.append(reverseString(xhr.responseText))
+                    */ 
+                    bodyElement.append(interpretJSON(xhr.responseText))
                 } else {
                     bodyElement.append("Daten konnten nicht geladen werden, Status " + xhr.status + " - " + xhr.statusText)
                 }
