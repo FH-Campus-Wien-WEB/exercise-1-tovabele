@@ -30,14 +30,14 @@ const movies = [
         "imdbRating": 7.7
     },
     {
-        "Title": "M�llers B�ro",
+        "Title": "Müllers Büro",
         "Runtime": 104,
         "Released": "1986-06-19",
         "Genres": ["Comedy","Crime","Musical"],
         "Directors": ["Niki List","Hans Selikovsky"],
         "Writers": ["Niki List"],
-      "Actors": ["Andreas Vit�sek","Barbara Rudnik","Christian Schmidt"],
-        "Plot": "Private detective Max M�ller and his assistent Larry try to solve a crime but find themselves in strange bars and women.",
+      "Actors": ["Andreas Vitasek","Barbara Rudnik","Christian Schmidt"],
+        "Plot": "Private detective Max Müller and his assistent Larry try to solve a crime but find themselves in strange bars and women.",
         "Poster": "https://m.media-amazon.com/images/M/MV5BMDg3MTIyNDItOGZiMi00NDE0LWI2NjEtNmExOGY0NmU2N2Q4XkEyXkFqcGdeQXVyNjEzMTc5NTQ@._V1_SX300.jpg",
         "Metascore": 100,
         "imdbRating": 6.7,
@@ -52,6 +52,7 @@ const movies = [
 app.use(express.static(path.join(__dirname, 'files')));
 // OMDB key: 21828272
 //fetch('http://www.omdbapi.com/?apikey=[yourkey]&')
+fetch('http://www.omdbapi.com/?apikey=21828272&')
 
 // Configure a 'get' endpoint for data..
 app.get('/movies', function (req, res) {
