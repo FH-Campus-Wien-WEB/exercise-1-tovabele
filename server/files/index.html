@@ -10,22 +10,98 @@
         this doesnt work, ask why!  <link rel="stylesheet" href="./stylesheets/style.css" >
         */
         body {
-            margin: 25px;
+            max-width: 50%;
             background-color: rgb(240,240,240);
             font-family: arial, sans-serif;
             font-size: 14px;
+            margin: 10px;
         }
         /* Applies to all <h1>...</h1> elements. */
+
+        ul#ratings {
+            margin-left: 0px;
+            margin-top: 30px;
+            padding: 0px;
+            max-width: 300px;
+            text-align: right;
+            list-style-position: inside;
+        }
+
+        ul#ratings li {
+            margin-left: 0px;
+            padding: 4px;
+            display: inline;
+            padding: 0px, 10px, 0px, 10px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font: larger, italic;
+        }
+
+        img {
+            border-radius: 12px;
+            max-width: 350px;
+            max-height: 450px;
+        }
+
         h1 {
             font-size: 35px;
             font-weight: normal;
             margin-top: 5px;
+            margin-bottom: 0px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 700;
         }
-        /* Applies to all elements with <... class="someclass"> specified. 
-        .someclass {
-            color: red;
+
+        h2 {
+            margin-bottom: 0px;
         }
-        */
+
+        ul{
+            margin: 0px;
+        }
+
+        li {
+            margin-left: 20px;
+        }
+
+        ul#releaseList {
+            margin-bottom: 20px;
+            margin-top: 0px;
+            padding-left: 0px;
+            padding-top: 0px;
+        }
+
+        ul#releaseList li {
+            margin-left: 0px;
+            margin-right: 20px;
+            display: inline;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font: larger, italic;
+        }
+
+        ul#genre {
+            padding: 0px;
+            max-width: 280px;
+            margin-bottom: 40px;
+            margin-left: 0px;
+            list-style-position: inside;
+        }
+
+        ul#genre li {
+            margin-left: 0px;
+            display: inline;
+            padding: 8px;
+            background: linear-gradient(180deg,rgba(0,0,0, 0) 20%, #ffd80020 100%);
+            border-radius: 12px;
+            border: 2px solid #666666;
+            margin: 0 4px 0;
+            font: large, bold; /* doesn't work? */
+        }
+
+
+        ul {
+            padding: 10px;
+        }
+
 
     </style>
     <script>
@@ -35,7 +111,7 @@
 
         function generateUnorderedList(body, heading, items) {
             const listHeading = document.createElement('h2')
-            listHeading.textContent = heading
+            listHeading.textContent = heading + ((items.length === 1) ? ":" : "s:") //postfix
             body.append(listHeading)
 
             let unorderedList = document.createElement('ul')
@@ -51,76 +127,91 @@
         function interpretJSON(j) {
             const data = JSON.parse(j);
             const body = document.body;
-           
+
+         
             //looping through the json movie objects
             data.forEach(item => {
+                let ratingList = document.createElement('ul')
+                    ratingList.id = "ratings"
+                    body.append(ratingList)
+
+                const poster = document.createElement('img')
+                body.append(poster)
+
+                const header = document.createElement('h1')
+                body.append(header)
+
+                let releaseList = document.createElement('ul')
+                    releaseList.id = "releaseList"
+                    body.append(releaseList)
+
                 // loop through the key words
                 for (let key in item) {
+
                     switch (key) {
                         case 'Title':
-                            const header = document.createElement('h1')
                             header.innerText = item[key]
-                            body.append(header)
-                            console.log("ich bin im " + key);
-                            console.log(item[key]);
+                            //console.log("ich bin im " + key);
+                            //console.log(item[key]);
                             break;
                         case 'Runtime':
-                            const runtime = document.createElement('div')
+                            const runtime = document.createElement('li')
                             const time = item[key]
                             const hours = Math.floor(time / 60)
                             const mins = time % 60
                             runtime.textContent = 'Runtime: ' + hours + 'h ' + mins + 'm'
-                            body.append(runtime)
+                            releaseList.append(runtime)
                             break;
                         case 'Released':
-                            const released = document.createElement('div')
+                            const released = document.createElement('li')
                             const date = item[key]
                             released.textContent = 'Released on ' + date
-                            body.append(released)
+                            releaseList.append(released)
                             break;
                         case 'Genres':
-                            const genre = document.createElement('div')
-                            genre.textContent = item[key]
-                            body.append(genre)
-                            break;
+                            let genreList = document.createElement('ul')
+                            genreList.id = "genre"
+                            body.append(genreList)
+
+                            item[key].forEach(item => {
+                                let li = document.createElement('li')
+                                li.textContent = item
+                                genreList.appendChild(li)
+                            })
+                           break;
                         case 'Directors':
-                            generateUnorderedList(body, "Director:", item[key])
+                            generateUnorderedList(body, "Director", item[key])
                             break;
                         case 'Writers':
-                            generateUnorderedList(body, "Writer:", item[key])
+                            generateUnorderedList(body, "Writer", item[key])
                             break;
                         case 'Actors':
-                            generateUnorderedList(body, "Actor:", item[key])
+                            generateUnorderedList(body, "Actor", item[key])
                             break;
                         case 'Plot':
                             const plot = document.createElement('div')
                             plot.textContent = item[key]
                             body.append(plot)
                             break;
-                        case 'Metascore':
-                            const metascore = document.createElement('div')
-                            metascore.textContent = '' + metascore
-                            body.append(metascore)
-                            break;
                         case 'Poster':
-                            const poster = document.createElement('div')
-                            poster.textContent = '' + poster
-                            body.append(poster)
+                            poster.src = item[key]
+                            break;
+                        case 'Metascore':
+                            const metascore = document.createElement('li')
+                            metascore.textContent = 'Metacritics: ' + item[key] + '%'
+                            ratingList.append(metascore)
                             break;
                         case 'imdbRating':
-                            const imdbrating = document.createElement('div')
-                            imdbrating.textContent = '' + imdbrating
-                            body.append(imdbrating)
+                            const imdbrating = document.createElement('li')
+                            imdbrating.textContent = 'IMDB: ' + item[key] + '/10'
+                            ratingList.append(imdbrating)
                             break;
                         default:
                             const paragraph = document.createElement('p')
                             paragraph.innerText = item[key]
                             body.append(paragraph)
                     }
-                        
-                    
                 }
-
             })
             return body
         }

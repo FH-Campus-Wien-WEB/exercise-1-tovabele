@@ -4,8 +4,8 @@ const app = express()
 const movies = [
     {
         "Title": "Blade Runner",
-        "Released": "1982-06-25",
         "Runtime": 117,
+        "Released": "1982-06-25",
         "Genres": ["Action","Drama","Sci - Fi"],
         "Directors": ["Ridley Scott"],
         "Writers": ["Hampton Fancher","David Webb Peoples","Philip K. Dick"],
@@ -18,8 +18,8 @@ const movies = [
 
     {
         "Title": "Hedwig and the Angry Inch",
-        "Released": "2001-08-31",
         "Runtime": 95,
+        "Released": "2001-08-31",
         "Genres": ["Comedy","Drama", "Music"],
         "Directors": ["John Cameron Mitchell"],
         "Writers": ["John Cameron Mitchell","Stephen Trask"],
@@ -31,15 +31,15 @@ const movies = [
     },
     {
         "Title": "Müllers Büro",
-        "Released": "1986-06-19",
         "Runtime": 104,
+        "Released": "1986-06-19",
         "Genres": ["Comedy","Crime","Musical"],
         "Directors": ["Niki List","Hans Selikovsky"],
         "Writers": ["Niki List"],
       "Actors": ["Andreas Vitásek","Barbara Rudnik","Christian Schmidt"],
         "Plot": "Private detective Max Müller and his assistent Larry try to solve a crime but find themselves in strange bars and women.",
         "Poster": "https://m.media-amazon.com/images/M/MV5BMDg3MTIyNDItOGZiMi00NDE0LWI2NjEtNmExOGY0NmU2N2Q4XkEyXkFqcGdeQXVyNjEzMTc5NTQ@._V1_SX300.jpg",
-        "Metascore": "N/A",
+        "Metascore": 100,
         "imdbRating": 6.7
     }
 ]
