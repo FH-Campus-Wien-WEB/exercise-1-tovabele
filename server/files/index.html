@@ -131,84 +131,86 @@
          
             //looping through the json movie objects
             data.forEach(item => {
-                let ratingList = document.createElement('ul')
-                    ratingList.id = "ratings"
-                    body.append(ratingList)
-
+                const ratingList = document.createElement('ul')
+                ratingList.id = "ratings"
+                body.append(ratingList)
+                
                 const poster = document.createElement('img')
                 body.append(poster)
+                poster.src = item.Poster
 
                 const header = document.createElement('h1')
                 body.append(header)
+                header.innerText = item.Title
 
-                let releaseList = document.createElement('ul')
+                const releaseList = document.createElement('ul')
                     releaseList.id = "releaseList"
                     body.append(releaseList)
 
-                // loop through the key words
-                for (let key in item) {
+                    const runtime = document.createElement('li')
+                    const hours = Math.floor(item.Runtime / 60)
+                    const mins = item.Runtime % 60
+                    runtime.textContent = 'Runtime: ' + hours + 'h ' + mins + 'm'
+                    releaseList.append(runtime)
 
+                    const releasedOn = document.createElement('li')
+                    releasedOn.textContent = 'Released on ' + item.Released
+                    releaseList.append(releasedOn)
+
+                const genreList = document.createElement('ul')
+                    genreList.id = "genre"
+                    body.append(genreList)
+                    item.Genres.forEach(genre => {
+                        let li = document.createElement('li')
+                        li.textContent = genre
+                        genreList.appendChild(li)
+                    })
+
+                generateUnorderedList(body, "Director", item.Directors)
+                generateUnorderedList(body, "Writer", item.Writers)
+                generateUnorderedList(body, "Actor", item.Actors)
+
+                const plot = document.createElement('div')
+                    plot.textContent = item.Plot
+                    body.append(plot)
+                
+
+                const metascore = document.createElement('li')
+                metascore.textContent = 'Metacritics: ' + item.Metascore + '%'
+                ratingList.append(metascore)
+
+                const imdbrating = document.createElement('li')
+                imdbrating.textContent = 'IMDB: ' + item.imdbRating + '/10'
+                ratingList.append(imdbrating)
+
+                // loop through any other key words
+                for (let key in item) {
                     switch (key) {
                         case 'Title':
-                            header.innerText = item[key]
-                            //console.log("ich bin im " + key);
-                            //console.log(item[key]);
-                            break;
-                        case 'Runtime':
-                            const runtime = document.createElement('li')
-                            const time = item[key]
-                            const hours = Math.floor(time / 60)
-                            const mins = time % 60
-                            runtime.textContent = 'Runtime: ' + hours + 'h ' + mins + 'm'
-                            releaseList.append(runtime)
-                            break;
+                            break
                         case 'Released':
-                            const released = document.createElement('li')
-                            const date = item[key]
-                            released.textContent = 'Released on ' + date
-                            releaseList.append(released)
-                            break;
+                            break
+                        case 'Runtime':
+                            break
                         case 'Genres':
-                            let genreList = document.createElement('ul')
-                            genreList.id = "genre"
-                            body.append(genreList)
-
-                            item[key].forEach(item => {
-                                let li = document.createElement('li')
-                                li.textContent = item
-                                genreList.appendChild(li)
-                            })
-                           break;
+                            break
                         case 'Directors':
-                            generateUnorderedList(body, "Director", item[key])
-                            break;
+                            break
                         case 'Writers':
-                            generateUnorderedList(body, "Writer", item[key])
-                            break;
+                            break
                         case 'Actors':
-                            generateUnorderedList(body, "Actor", item[key])
-                            break;
+                            break
                         case 'Plot':
-                            const plot = document.createElement('div')
-                            plot.textContent = item[key]
-                            body.append(plot)
-                            break;
+                            break
                         case 'Poster':
-                            poster.src = item[key]
-                            break;
+                            break
                         case 'Metascore':
-                            const metascore = document.createElement('li')
-                            metascore.textContent = 'Metacritics: ' + item[key] + '%'
-                            ratingList.append(metascore)
-                            break;
+                            break
                         case 'imdbRating':
-                            const imdbrating = document.createElement('li')
-                            imdbrating.textContent = 'IMDB: ' + item[key] + '/10'
-                            ratingList.append(imdbrating)
-                            break;
+                            break
                         default:
                             const paragraph = document.createElement('p')
-                            paragraph.innerText = item[key]
+                            paragraph.innerText = key + ': ' + item[key]
                             body.append(paragraph)
                     }
                 }
